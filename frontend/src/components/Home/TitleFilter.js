@@ -1,30 +1,46 @@
 import agent from "../../agent";
-import { useState } from "react"
+import { useState, useEffect } from "react"
+import { connect } from "react-redux";
+
+const mapDispatchToProps = (dispatch) => ({
+  onChangeTitleFilter: (pager, payload) =>
+    dispatch({ type: "APPLY_TITLE_FILTER", pager, payload}),  
+});
+
 
 const TitleFilter = ({onChangeTitleFilter}) => {
-  const [titleFilter, setTitleFilter] = useState()
+  const [titleFilter, setTitleFilter] = useState("")
   const handleSubmit = (event) => {
     event.preventDefault()
   }
+
+  useEffect(() => {
+    let isMounted = true
+    if (isMounted) {
+      if (titleFilter.length < 3) {
+        onChangeTitleFilter(      
+          (page) => agent.Items.byTitle("", page),
+          agent.Items.byTitle(""),
+        )
+      } else {
+        onChangeTitleFilter(      
+          (page) => agent.Items.byTitle(titleFilter, page),
+          agent.Items.byTitle(titleFilter),
+        )
+      }
+    }
+    return () => {
+      isMounted = false
+    }
+  }, [titleFilter, onChangeTitleFilter])
+
   return (
     <form onSubmit={handleSubmit}>
       <div className="input-group">
         <input 
           className="form-control border-end-0 border"
           onChange={(event) => {
-            setTitleFilter(event.target.value)            
-            if (titleFilter.length < 3) {
-              onChangeTitleFilter(      
-                (page) => agent.Items.byTitle("", page),
-                agent.Items.byTitle(""),
-              )
-              return
-            }
-        
-            onChangeTitleFilter(      
-              (page) => agent.Items.byTitle(titleFilter, page),
-              agent.Items.byTitle(titleFilter),
-            )
+            setTitleFilter(event.target.value)                        
           }} 
           value={titleFilter}
           id="search-box" 
@@ -37,4 +53,4 @@ const TitleFilter = ({onChangeTitleFilter}) => {
   )
 }
 
-export default TitleFilter
+export default connect(null, mapDispatchToProps)(TitleFilter);
