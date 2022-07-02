@@ -4,7 +4,7 @@ require("./models/Item");
 require("./models/Comment");
 
 mongoose.connect(
-  `${process.env.MONGODB_URI}/admin`, 
+  process.env.MONGODB_URI, 
   { useNewUrlParser: true, useUnifiedTopology: true }).then(() => {
     console.log("MONGOOSE DB CONNECTED")
   }).catch((e) => {
