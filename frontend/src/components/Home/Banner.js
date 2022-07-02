@@ -8,7 +8,7 @@ const Banner = ({ titleFilter }) => {
         <img src={logo} alt="banner" />
         <div>
           <span id="get-part">A place to get</span>
-          {titleFilter}
+          <TitleFilter />
           <span> the cool stuff.</span>
         </div>
       </div>
