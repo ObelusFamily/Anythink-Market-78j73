@@ -1,56 +1,55 @@
 import agent from "../../agent";
-import { useState, useEffect } from "react"
+import { useState, useEffect } from "react";
 import { connect } from "react-redux";
 
 const mapDispatchToProps = (dispatch) => ({
   onChangeTitleFilter: (pager, payload) =>
-    dispatch({ type: "APPLY_TITLE_FILTER", pager, payload}),  
+    dispatch({ type: "APPLY_TITLE_FILTER", pager, payload }),
 });
 
-
-const TitleFilter = ({onChangeTitleFilter}) => {
-  const [titleFilter, setTitleFilter] = useState("")
+const TitleFilter = ({ onChangeTitleFilter }) => {
+  const [titleFilter, setTitleFilter] = useState("");
   const handleSubmit = (event) => {
-    event.preventDefault()
-  }
+    event.preventDefault();
+  };
 
   useEffect(() => {
-    let isMounted = true
+    let isMounted = true;
     if (isMounted) {
       if (titleFilter.length < 3) {
-        onChangeTitleFilter(      
+        onChangeTitleFilter(
           (page) => agent.Items.byTitle("", page),
-          agent.Items.byTitle(""),
-        )
+          agent.Items.byTitle("")
+        );
       } else {
-        onChangeTitleFilter(      
+        onChangeTitleFilter(
           (page) => agent.Items.byTitle(titleFilter, page),
-          agent.Items.byTitle(titleFilter),
-        )
+          agent.Items.byTitle(titleFilter)
+        );
       }
     }
     return () => {
-      isMounted = false
-    }
-  }, [titleFilter, onChangeTitleFilter])
+      isMounted = false;
+    };
+  }, [titleFilter, onChangeTitleFilter]);
 
   return (
     <form onSubmit={handleSubmit}>
       <div className="input-group">
-        <input 
+        <input
           className="form-control border-end-0 border"
           onChange={(event) => {
-            setTitleFilter(event.target.value)                        
-          }} 
+            setTitleFilter(event.target.value);
+          }}
           value={titleFilter}
-          id="search-box" 
-          name="title" 
-          type="text" 
+          id="search-box"
+          name="title"
+          type="text"
           placeholder="What is it that you truly desire?"
-        />        
+        />
       </div>
     </form>
-  )
-}
+  );
+};
 
 export default connect(null, mapDispatchToProps)(TitleFilter);

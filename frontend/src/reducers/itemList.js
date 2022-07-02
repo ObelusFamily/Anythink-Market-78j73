@@ -45,7 +45,7 @@ const reducer = (state = {}, action) => {
         tab: null,
         tag: null,
         currentPage: 0,
-      }
+      };
     case APPLY_TAG_FILTER:
       return {
         ...state,

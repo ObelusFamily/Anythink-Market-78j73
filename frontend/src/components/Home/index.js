@@ -23,7 +23,7 @@ const mapDispatchToProps = (dispatch) => ({
   onClickTag: (tag, pager, payload) =>
     dispatch({ type: APPLY_TAG_FILTER, tag, pager, payload }),
   onChangeTitleFilter: (pager, payload) =>
-    dispatch({ type: "APPLY_TITLE_FILTER", pager, payload}),
+    dispatch({ type: "APPLY_TITLE_FILTER", pager, payload }),
   onLoad: (tab, pager, payload) =>
     dispatch({ type: HOME_PAGE_LOADED, tab, pager, payload }),
   onUnload: () => dispatch({ type: HOME_PAGE_UNLOADED }),
@@ -48,8 +48,11 @@ class Home extends React.Component {
   render() {
     return (
       <div className="home-page">
-        <Banner titleFilter={<TitleFilter onChangeTitleFilter={this.props.onChangeTitleFilter}/>}/>
-        
+        <Banner
+          titleFilter={
+            <TitleFilter onChangeTitleFilter={this.props.onChangeTitleFilter} />
+          }
+        />
 
         <div className="container page">
           <Tags tags={this.props.tags} onClickTag={this.props.onClickTag} />
