@@ -1,6 +1,6 @@
 import React from "react";
 import logo from "../../imgs/logo.png";
-
+import TitleFilter from "./TitleFilter";
 const Banner = ({ titleFilter }) => {
   return (
     <div className="banner text-white">

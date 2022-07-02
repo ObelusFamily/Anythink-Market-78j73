@@ -1,6 +1,5 @@
 import Banner from "./Banner";
 import MainView from "./MainView";
-import TitleFilter from "./TitleFilter";
 import React from "react";
 import Tags from "./Tags";
 import agent from "../../agent";
